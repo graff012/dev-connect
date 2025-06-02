@@ -6,6 +6,12 @@ on:
 jobs:
   deployment:
     runs-on: ubuntu-latest
+    env:
+      SECRET_HOST: ${{SECRET_HOST}}
+      SECRET_USER: ${{SECRET_USER}}
+      SSH_KEY: ${{SSH_SECRET_KEY}}
     steps:
       - name: deploy
-        run: echo 'hello' > file.txt
+        run: echo "${SSH_KEY}" > my_ssh_key.pem |
+              chmod 400 my_ssh_key.pem |
+              ssh -i my_ssh_key.pem ${SERVER_USER}@${SERVER_HOST}
