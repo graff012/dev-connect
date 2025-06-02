@@ -14,4 +14,4 @@ jobs:
       - name: deploy
         run: echo "${SSH_KEY}" > my_ssh_key.pem |
               chmod 400 my_ssh_key.pem |
-              ssh -i my_ssh_key.pem ${SERVER_USER}@${SERVER_HOST}
+              ssh -i my_ssh_key.pem StrictHostKeyChecking=no ${SERVER_USER}@${SERVER_HOST}
