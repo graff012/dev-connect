@@ -7,11 +7,11 @@ jobs:
   deployment:
     runs-on: ubuntu-latest
     env:
-      SECRET_HOST: ${{secrets.SECRET_HOST}}
-      SECRET_USER: ${{secrets.SECRET_USER}}
+      SERVER_HOST: ${{secrets.SECRET_HOST}}
+      SERVER_USER: ${{secrets.SECRET_USER}}
       SSH_KEY: ${{secrets.SSH_SECRET_KEY}}
     steps:
       - name: deploy
-        run: echo "${SSH_KEY}" > my_ssh_key.pem &&
-              chmod 400 my_ssh_key.pem &&
+        run: echo "${SSH_KEY}" > my_ssh_key.pem |
+              chmod 400 my_ssh_key.pem |
               ssh -i my_ssh_key.pem -o StrictHostKeyChecking=no ${SERVER_USER}@${SERVER_HOST}
