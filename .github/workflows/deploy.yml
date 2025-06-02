@@ -7,9 +7,9 @@ jobs:
   deployment:
     runs-on: ubuntu-latest
     env:
-      SECRET_HOST: ${{SECRET_HOST}}
-      SECRET_USER: ${{SECRET_USER}}
-      SSH_KEY: ${{SSH_SECRET_KEY}}
+      SECRET_HOST: ${{secrets.SECRET_HOST}}
+      SECRET_USER: ${{secrets.SECRET_USER}}
+      SSH_KEY: ${{secrets.SSH_SECRET_KEY}}
     steps:
       - name: deploy
         run: echo "${SSH_KEY}" > my_ssh_key.pem |
