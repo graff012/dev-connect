@@ -1,0 +1,9 @@
+name: Deploy to server
+on: 
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    name: Starting deploy to server
+    runs-on: echo "red dead redemption" > file.txt
