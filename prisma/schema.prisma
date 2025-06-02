@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String      @id @default(uuid())
+  username  String      @unique @db.VarChar(240)
+  email     String      @unique @db.VarChar(240)
+  password  String      @db.VarChar(240)
+  role      Role        @default(user)
+  avatarUrl String?     @map("avatar_url")
+  resume    String?
+  bio       String?
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
+  feedback  Feedback[]
+  portfolio Portfolio[]
+
+  @@map("users")
+}
+
+model Portfolio {
+  id          String     @id @default(uuid())
+  title       String     @db.VarChar(200)
+  description String
+  skills      String[]
+  isVerified  Boolean    @default(false)
+  userId      String     @map("user_id")
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+  feedback    Feedback[]
+  file        File[]
+  user        User       @relation(fields: [userId], references: [id])
+
+  @@map("portfolio")
+}
+
+model File {
+  id          String    @id @default(uuid())
+  url         String
+  type        FileType
+  portfolioId String    @map("portfolio_id")
+  portfolio   Portfolio @relation(fields: [portfolioId], references: [id])
+
+  @@map("files")
+}
+
+model Feedback {
+  id          String    @id @default(uuid())
+  comment     String
+  rating      Int
+  userId      String    @map("user_id")
+  portfolioId String    @map("portfolio_id")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  portfolio   Portfolio @relation(fields: [portfolioId], references: [id])
+  user        User      @relation(fields: [userId], references: [id])
+
+  @@map("feedback")
+}
+
+enum Role {
+  user
+  admin
+}
+
+enum FileType {
+  image
+  zip
+  video
+  other
+}

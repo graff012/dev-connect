@@ -1,0 +1,27 @@
+version: '3.8'
+
+services: 
+  nest-app:
+    build:
+      context: .
+    ports: 
+      - "8080:4000"
+    volumes:
+      - my_volume:/app/data
+    environment:
+      - PORT=4000 
+    command: ["yarn", "start:prod"]
+  
+  postgres:
+    image: postgres:17.5
+    environment: 
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=hello12
+      - POSTGRES_DB=dev_connect
+    volumes:
+      - my_postgres_volume:/var/lib/postgresql/data 
+    ports:
+      - "5433:5432"
+volumes:
+  my_volume:
+  my_postgres_volume:
