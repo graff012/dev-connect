@@ -6,9 +6,6 @@ on:
 jobs:
   deployment:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./app
     env:
       SERVER_HOST: ${{secrets.SERVER_HOST}}
       SERVER_USER: ${{secrets.SERVER_USER}}
